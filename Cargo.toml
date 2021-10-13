@@ -1,0 +1,14 @@
+[package]
+name = "toml_host"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.44"
+rocket = { version = "0.5.0-rc", features = ["json"] }
+rocket_anyhow = "0.1.1"
+serde = "1.0.130"
+serde_json = "1.0.68"
+toml = "0.5.8"
