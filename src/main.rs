@@ -19,5 +19,20 @@ fn get() -> Result<Json<serde_json::Value>, String> {
     ))
 }
 
+#[get("/<file_stem>")]
+fn get_file(file_stem: String) -> Result<Json<serde_json::Value>, String> {
+    Ok(Json(
+        toml::from_str::<serde_json::Value>(&{
+            let mut string = String::new();
+            File::open(PathBuf::from("/files/").join(file_stem).with_extension("toml"))
+                .map_err(|e| e.to_string())?
+                .read_to_string(&mut string)
+                .map_err(|e| e.to_string())?;
+            string
+        })
+        .map_err(|e| e.to_string())?,
+    ))
+}
+
 #[launch]
-fn rocket() -> _ { rocket::build().mount("/", routes![get]) }
+fn rocket() -> _ { rocket::build().mount("/", routes![get, get_file]) }
